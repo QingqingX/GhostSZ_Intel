@@ -1,0 +1,55 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 04/01/2019 11:40:56 AM
+// Design Name: 
+// Module Name: fpaddsub
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module fpaddsub(
+    add_sub,
+	clock,
+	dataa,
+	datab,
+	result	
+    );
+parameter IN_WIDTH=32;
+
+input wire clock, add_sub;
+input wire [IN_WIDTH-1:0] dataa,datab;
+output wire [IN_WIDTH-1:0] result;
+
+wire [7:0] op;
+assign op={7'b0,~add_sub}; //0 for sub, 1 for add
+
+fpas core (
+  .aclk(clock),                                        // input wire aclk
+  .s_axis_a_tvalid('b1),                  // input wire s_axis_a_tvalid
+  .s_axis_a_tready(s_axis_a_tready),                  // output wire s_axis_a_tready
+  .s_axis_a_tdata(dataa),                    // input wire [31 : 0] s_axis_a_tdata
+  .s_axis_b_tvalid('b1),                  // input wire s_axis_b_tvalid
+  .s_axis_b_tready(s_axis_b_tready),                  // output wire s_axis_b_tready
+  .s_axis_b_tdata(datab),                    // input wire [31 : 0] s_axis_b_tdata
+  .s_axis_operation_tvalid('b1),  // input wire s_axis_operation_tvalid
+  .s_axis_operation_tready(s_axis_operation_tready),  // output wire s_axis_operation_tready
+  .s_axis_operation_tdata(op),    // input wire [7 : 0] s_axis_operation_tdata
+  .m_axis_result_tvalid(m_axis_result_tvalid),        // output wire m_axis_result_tvalid
+  .m_axis_result_tready('b1),        // input wire m_axis_result_tready
+  .m_axis_result_tdata(result)          // output wire [31 : 0] m_axis_result_tdata
+);
+    
+endmodule
