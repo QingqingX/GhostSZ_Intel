@@ -13,7 +13,7 @@ Four directories:
   the main design files of ghostsz
   the top module is sz_inner.v
 2. ip_core
-  the ip files used
+  the ip files used (removed)
 3. testfiles:
   input test file in.txt
 4. testbenches:
